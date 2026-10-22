@@ -17,15 +17,31 @@ export function isOverdue(task) {
   return Boolean(due) && !task.completed && due < todayISO();
 }
 
+// 'YYYY-MM-DD' -> 'dd/mm/aaaa'
 export function formatDate(value) {
   const iso = normalizeDate(value);
   if (!iso) return '';
-  const [y, m, d] = iso.split('-').map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString('pt-BR', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  const [y, m, d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+// Máscara enquanto digita: '25122026' -> '25/12/2026'
+export function maskBR(text) {
+  const digits = text.replace(/\D/g, '').slice(0, 8);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+}
+
+// 'dd/mm/aaaa' -> 'YYYY-MM-DD' (ou null se a data não existir, ex.: 31/02/2026)
+export function brToISO(text) {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(text);
+  if (!m) return null;
+  const [, dd, mm, yyyy] = m;
+  const date = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+  const valid =
+    date.getFullYear() === Number(yyyy) && date.getMonth() === Number(mm) - 1 && date.getDate() === Number(dd);
+  return valid ? `${yyyy}-${mm}-${dd}` : null;
 }
 
 // Data mais próxima primeiro; sem data vai para o fim; empate: mais recente primeiro.

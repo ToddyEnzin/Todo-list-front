@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { CloseIcon } from './Icons.jsx';
-import { normalizeDate } from '../utils/date.js';
+import { brToISO, formatDate, maskBR } from '../utils/date.js';
 
 // Serve para criar (task = null) e editar (task = objeto).
 export default function TaskModal({ task, onClose, onSubmit }) {
   const isEdit = Boolean(task);
   const [title, setTitle] = useState(task?.title ?? '');
-  const [dueDate, setDueDate] = useState(normalizeDate(task?.due_date) ?? '');
+  const [dueDate, setDueDate] = useState(formatDate(task?.due_date));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const titleRef = useRef(null);
@@ -25,10 +25,15 @@ export default function TaskModal({ task, onClose, onSubmit }) {
       titleRef.current?.focus();
       return;
     }
+    const isoDate = dueDate ? brToISO(dueDate) : null;
+    if (dueDate && !isoDate) {
+      setError('Data inválida. Use o formato dd/mm/aaaa.');
+      return;
+    }
     setSaving(true);
     setError('');
     try {
-      await onSubmit({ title: title.trim(), dueDate: dueDate || null });
+      await onSubmit({ title: title.trim(), dueDate: isoDate });
     } catch (err) {
       setError(err.message);
       setSaving(false);
@@ -64,7 +69,18 @@ export default function TaskModal({ task, onClose, onSubmit }) {
           <span>
             Data limite <em>opcional</em>
           </span>
-          <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
+          <input
+            type="text"
+            inputMode="numeric"
+            autoComplete="off"
+            maxLength={10}
+            placeholder="dd/mm/aaaa"
+            value={dueDate}
+            onChange={(e) => {
+              setDueDate(maskBR(e.target.value));
+              if (error) setError('');
+            }}
+          />
         </label>
 
         {error && (
