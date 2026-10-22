@@ -38,6 +38,8 @@ Abra http://localhost:5173
 - Botões de editar/excluir aparecem ao passar o mouse
 - Estado vazio: “Você não tem tarefas pendentes.”
 - Botão flutuante “+” no canto inferior direito
+- Filtros Todas / Pendentes / Concluídas, botão “Limpar concluídas”
+- Tema escuro e claro (botão de sol/lua), layout inspirado no mockup em azul e vermelho
 
 ## Estrutura do frontend
 
@@ -46,7 +48,7 @@ frontend/src
 ├── api.js               # chamadas HTTP ao backend
 ├── App.jsx              # estado, busca, contadores, lista
 ├── components/          # TaskItem, TaskModal, Icons
-├── hooks/useDebounce.js
+├── hooks/               # useDebounce, useTheme
 ├── utils/date.js        # atraso, formatação e ordenação
 └── styles.css
 ```
