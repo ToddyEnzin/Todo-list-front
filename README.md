@@ -27,16 +27,16 @@ Abra http://localhost:5173
 
 ## Funcionalidades do frontend
 
-- Lista de tarefas com contadores de **Total** e **Completed**
-- Criar tarefa em modal (“Create Task”) com data limite opcional
-- Editar tarefa em modal (“Edit Task”) pelo botão de lápis
+- Lista de tarefas com contadores de **Total** e **Concluídas**
+- Criar tarefa em modal (“Criar Tarefa”) com data limite opcional
+- Editar tarefa em modal (“Editar Tarefa”) pelo botão de lápis
 - Excluir tarefa
 - Marcar/desmarcar como concluída (checkbox com gradiente)
 - Busca em tempo real com **debounce** de 350 ms
 - Ordenação: data limite mais próxima primeiro; sem data vão para o fim
 - Tarefa pendente com data vencida: título vermelho + selo **“Em atraso”**
 - Botões de editar/excluir aparecem ao passar o mouse
-- Estado vazio: “You have no pending tasks.”
+- Estado vazio: “Você não tem tarefas pendentes.”
 - Botão flutuante “+” no canto inferior direito
 
 ## Estrutura do frontend

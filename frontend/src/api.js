@@ -4,25 +4,33 @@ const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3333').repla
 const TASKS_URL = `${BASE_URL}/api/tasks`;
 
 async function request(url, options = {}) {
+  // Só envia Content-Type quando há corpo: o Fastify devolve erro em um DELETE
+  // com "application/json" e corpo vazio.
+  const headers = options.body ? { 'Content-Type': 'application/json' } : {};
+
   let response;
   try {
-    response = await fetch(url, {
-      headers: { 'Content-Type': 'application/json' },
-      ...options,
-    });
-  } catch {
-    throw new Error('Could not reach the server. Is the backend running on port 3333?');
+    response = await fetch(url, { ...options, headers });
+  } catch (err) {
+    if (err.name === 'AbortError') throw err;
+    throw new Error('Não foi possível conectar ao servidor. O backend está rodando na porta 3333?');
   }
 
   if (!response.ok) {
-    let message = `Request failed (${response.status}).`;
+    let detail = '';
     try {
       const body = await response.json();
-      if (body?.message) message = body.message;
+      detail = body?.message || '';
     } catch {
       /* resposta sem corpo JSON */
     }
-    throw new Error(message);
+    if (response.status >= 500) {
+      throw new Error(
+        `Erro no servidor (${response.status})${detail ? `: ${detail}` : ''}. ` +
+          'Verifique se o MySQL está ligado e se o schema.sql e o backend/.env estão corretos.'
+      );
+    }
+    throw new Error(detail || `Falha na requisição (${response.status}).`);
   }
 
   return response.status === 204 ? null : response.json();

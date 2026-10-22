@@ -11,7 +11,7 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
         type="button"
         role="checkbox"
         aria-checked={completed}
-        aria-label={completed ? `Mark "${task.title}" as pending` : `Mark "${task.title}" as done`}
+        aria-label={completed ? `Marcar "${task.title}" como pendente` : `Marcar "${task.title}" como concluída`}
         className="check"
         onClick={() => onToggle(task)}
       >
@@ -37,8 +37,8 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
         <button
           type="button"
           className="icon-btn"
-          aria-label={`Edit "${task.title}"`}
-          title="Edit"
+          aria-label={`Editar "${task.title}"`}
+          title="Editar"
           onClick={() => onEdit(task)}
         >
           <PencilIcon />
@@ -46,8 +46,8 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
         <button
           type="button"
           className="icon-btn danger"
-          aria-label={`Delete "${task.title}"`}
-          title="Delete"
+          aria-label={`Excluir "${task.title}"`}
+          title="Excluir"
           onClick={() => onDelete(task)}
         >
           <TrashIcon />

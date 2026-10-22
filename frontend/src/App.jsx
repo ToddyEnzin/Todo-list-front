@@ -79,14 +79,14 @@ export default function App() {
   return (
     <div className="app">
       <header className="top">
-        <h1>My Tasks</h1>
+        <h1>Minhas Tarefas</h1>
         <dl className="counters">
           <div>
             <dt>Total</dt>
             <dd data-testid="total">{totals.total}</dd>
           </div>
           <div>
-            <dt>Completed</dt>
+            <dt>Concluídas</dt>
             <dd data-testid="completed">{totals.completed}</dd>
           </div>
         </dl>
@@ -98,8 +98,8 @@ export default function App() {
           type="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search tasks"
-          aria-label="Search tasks"
+          placeholder="Buscar tarefas"
+          aria-label="Buscar tarefas"
         />
       </div>
 
@@ -107,18 +107,18 @@ export default function App() {
         <div className="alert" role="alert">
           <span>{error}</span>
           <button type="button" onClick={() => load(debouncedSearch)}>
-            Try again
+            Tentar novamente
           </button>
         </div>
       )}
 
       {loading ? (
-        <p className="status">Loading tasks…</p>
+        <p className="status">Carregando tarefas…</p>
       ) : sorted.length === 0 ? (
         !error && (
           <div className="empty">
             <div className="empty-art" aria-hidden="true" />
-            <p>{isSearching ? `No tasks match “${debouncedSearch}”.` : 'You have no pending tasks.'}</p>
+            <p>{isSearching ? `Nenhuma tarefa encontrada para “${debouncedSearch}”.` : 'Você não tem tarefas pendentes.'}</p>
           </div>
         )
       ) : (
@@ -135,7 +135,7 @@ export default function App() {
         </ul>
       )}
 
-      <button type="button" className="fab" aria-label="Create task" onClick={() => setModal({ task: null })}>
+      <button type="button" className="fab" aria-label="Criar tarefa" onClick={() => setModal({ task: null })}>
         <PlusIcon width={26} height={26} />
       </button>
 

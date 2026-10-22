@@ -21,7 +21,7 @@ export default function TaskModal({ task, onClose, onSubmit }) {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!title.trim()) {
-      setError('Give your task a name.');
+      setError('Dê um nome para a tarefa.');
       titleRef.current?.focus();
       return;
     }
@@ -39,20 +39,20 @@ export default function TaskModal({ task, onClose, onSubmit }) {
     <div className="backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <form className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onSubmit={handleSubmit} noValidate>
         <div className="modal-head">
-          <h2 id="modal-title">{isEdit ? 'Edit Task' : 'Create Task'}</h2>
-          <button type="button" className="icon-btn" onClick={onClose} aria-label="Close">
+          <h2 id="modal-title">{isEdit ? 'Editar Tarefa' : 'Criar Tarefa'}</h2>
+          <button type="button" className="icon-btn" onClick={onClose} aria-label="Fechar">
             <CloseIcon />
           </button>
         </div>
 
         <label className="field">
-          <span>Task name</span>
+          <span>Nome da tarefa</span>
           <input
             ref={titleRef}
             type="text"
             value={title}
             maxLength={255}
-            placeholder="What needs to get done?"
+            placeholder="O que você precisa fazer?"
             onChange={(e) => {
               setTitle(e.target.value);
               if (error) setError('');
@@ -62,7 +62,7 @@ export default function TaskModal({ task, onClose, onSubmit }) {
 
         <label className="field">
           <span>
-            Due date <em>optional</em>
+            Data limite <em>opcional</em>
           </span>
           <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
         </label>
@@ -75,10 +75,10 @@ export default function TaskModal({ task, onClose, onSubmit }) {
 
         <div className="modal-foot">
           <button type="button" className="btn ghost" onClick={onClose}>
-            Cancel
+            Cancelar
           </button>
           <button type="submit" className="btn primary" disabled={saving}>
-            {saving ? 'Saving…' : isEdit ? 'Save changes' : 'Create task'}
+            {saving ? 'Salvando…' : isEdit ? 'Salvar alterações' : 'Criar tarefa'}
           </button>
         </div>
       </form>
